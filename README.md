@@ -17,6 +17,33 @@ The goal of this level is for you to hack the basic token contract below.
 - How to treat overflow/underflow?
 - Why is it important to check breaking changes before upgrading the Solidity version?
 
+## Smart Contract Code
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.6.0;
+
+contract Token {
+
+  mapping(address => uint) balances;
+  uint public totalSupply;
+
+  constructor(uint _initialSupply) public {
+    balances[msg.sender] = totalSupply = _initialSupply;
+  }
+
+  function transfer(address _to, uint _value) public returns (bool) {
+    require(balances[msg.sender] - _value >= 0);
+    balances[msg.sender] -= _value;
+    balances[_to] += _value;
+    return true;
+  }
+
+  function balanceOf(address _owner) public view returns (uint balance) {
+    return balances[_owner];
+  }
+}
+```
+
 ## Security pitfall in the contract
 #### Overflow and Underflow of uint[xxx]
 An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2^8-1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits – either larger than the maximum or lower than the minimum representable value.
