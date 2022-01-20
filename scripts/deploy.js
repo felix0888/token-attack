@@ -13,6 +13,11 @@ async function main() {
   const token = await Token.deploy();
   console.log("Token address: ", await token.address);
   console.log("Account balance after Token deploy: ", (await deployer.getBalance()).toString());
+
+  const TokenAttack = await ethers.getContractFactory("TokenAttack");
+  const tokenAttack = await TokenAttack.deploy();
+  console.log("TokenAttack address: ", await tokenAttack.address);
+  console.log("Account balance after TokenAttack deploy: ", (await deployer.getBalance()).toString());
 }
 
 // We recommend this pattern to be able to use async/await everywhere
