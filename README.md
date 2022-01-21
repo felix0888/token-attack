@@ -86,7 +86,11 @@ It sends the `1000000` to `attacker`, `msg.sender`'s balance becomes a wrong val
 #### How to fix it?
 1. Update the require statement.
 ```solidity
-require(balances[msg.sender] >= _value && balances[_to]);
+require(balances[msg.sender] >= _value && balances[_to] + _value <= 2**256 - 1);
+```
+or
+```solidity
+require(balances[msg.sender] - _value <= balances[msg.sender] && balances[_to] + _value >= balances[_to]);
 ```
 
 2. Use SafeMath.
